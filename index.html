@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Emulator</title>
+    <title>Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -14,88 +14,25 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            justify-content: center;
+            align-items: center;
         }
-        .header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 1.5em 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            flex-shrink: 0; /* Prevent shrinking */
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-        .main {
+        .login-box {
+            background-color: white;
             padding: 2em;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            box-sizing: border-box; /* Ensure padding is included in the width */
-        }
-        .input-box {
-            margin-bottom: 2em;
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            justify-content: center;
-            box-sizing: border-box; /* Ensure padding is included in the width */
-        }
-        .input-box input {
-            width: 70%;
-            padding: 0.5em 1em;
-            font-size: 1em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 0.5em;
-            box-sizing: border-box; /* Ensure padding is included in the width */
-        }
-        .input-box button {
-            padding: 0.5em 1em;
-            font-size: 1em;
-            color: white;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            box-sizing: border-box; /* Ensure padding is included in the width */
-        }
-        .input-box button:hover {
-            background-color: #45a049;
-        }
-        iframe {
-            width: 100%;
-            height: 80vh;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box; /* Ensure padding is included in the width */
-        }
-        .lock-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100%;
             text-align: center;
-            box-sizing: border-box; /* Ensure padding is included in the width */
         }
-        .lock-page input {
+        .login-box input {
+            width: 100%;
             padding: 0.5em 1em;
+            margin: 0.5em 0;
             font-size: 1em;
             border: 1px solid #ccc;
             border-radius: 4px;
-            margin-bottom: 1em;
-            box-sizing: border-box; /* Ensure padding is included in the width */
         }
-        .lock-page button {
+        .login-box button {
             padding: 0.5em 1em;
             font-size: 1em;
             color: white;
@@ -104,51 +41,48 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
-            box-sizing: border-box; /* Ensure padding is included in the width */
         }
-        .lock-page button:hover {
+        .login-box button:hover {
             background-color: #45a049;
-        }
-        .hidden {
-            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="lock-page" id="lockPage">
-        <h2>Enter Password to Access the Emulator</h2>
-        <input type="password" id="passwordInput" placeholder="Enter Password">
-        <button onclick="unlock()">Unlock</button>
-    </div>
-
-    <div class="main hidden" id="mainContent">
-        <div class="header">
-            <h1>Website Emulator</h1>
-        </div>
-        <div class="input-box">
-            <input type="text" id="urlInput" placeholder="Enter website URL">
-            <button onclick="loadWebsite()">Emulate</button>
-        </div>
-        <iframe id="iframe" src=""></iframe>
+    <div class="login-box">
+        <h2>Login to Access the Emulator</h2>
+        <form action="emulator.html" method="POST" onsubmit="handleLogin(event)">
+            <input type="text" id="username" name="username" placeholder="Enter Username" required>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            <button type="submit">Login</button>
+        </form>
     </div>
 
     <script>
-        function unlock() {
-            var password = document.getElementById('passwordInput').value;
-            if (password === '12024') {
-                document.getElementById('lockPage').classList.add('hidden');
-                document.getElementById('mainContent').classList.remove('hidden');
-            } else {
-                alert('Incorrect password. Please try again.');
-            }
-        }
+        const logins = {
+            'Albie': '12024',
+            'Eric': '82958',
+            'Timmy': '73947',
+            'Alfie': '92947',
+            'Oscar': '82847',
+            'Aarush': '93748',
+            'Harry': '48274',
+            'Aman': '28373',
+            'Anap': '27386',
+            'Admin': '00000'
+        };
 
-        function loadWebsite() {
-            var url = document.getElementById('urlInput').value;
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                url = 'http://' + url;
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (logins[username] === password) {
+                const form = event.target;
+                form.action = `emulator.html?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+                form.submit();
+            } else {
+                alert('Incorrect username or password. Please try again.');
             }
-            document.getElementById('iframe').src = url;
         }
     </script>
 </body>
