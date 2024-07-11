@@ -6,223 +6,149 @@
     <title>Website Emulator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset default styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
             padding: 0;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
-        
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        
         .header {
             background-color: #4CAF50;
             color: white;
             text-align: center;
-            padding: 20px 0;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 20px;
+            padding: 1.5em 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            flex-shrink: 0; /* Prevent shrinking */
         }
-        
         .header h1 {
             margin: 0;
             font-size: 2em;
         }
-        
-        .section {
-            margin-bottom: 20px;
-        }
-        
-        .section h2 {
-            margin-bottom: 10px;
-            color: #333;
-            text-align: center;
-        }
-        
-        .form-container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .form-container form {
+        .main {
+            padding: 2em;
+            flex: 1;
             display: flex;
             flex-direction: column;
-        }
-        
-        .form-container label {
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        
-        .form-container input[type="text"], 
-        .form-container input[type="password"] {
-            padding: 10px;
-            margin-bottom: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        
-        .form-container button {
-            padding: 12px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .form-container button:hover {
-            background-color: #45a049;
-        }
-        
-        .emulator-container {
-            display: none;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .emulator-container.active {
-            display: block;
-        }
-        
-        .input-box {
-            display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box; /* Ensure padding is included in the width */
         }
-        
+        .input-box {
+            margin-bottom: 2em;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            box-sizing: border-box; /* Ensure padding is included in the width */
+        }
         .input-box input {
-            flex: 1;
-            padding: 12px;
-            font-size: 16px;
+            width: 70%;
+            padding: 0.5em 1em;
+            font-size: 1em;
             border: 1px solid #ccc;
-            border-radius: 4px 0 0 4px;
+            border-radius: 4px;
+            margin-right: 0.5em;
+            box-sizing: border-box; /* Ensure padding is included in the width */
         }
-        
         .input-box button {
-            padding: 12px 20px;
-            font-size: 16px;
-            color: #fff;
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: white;
             background-color: #4CAF50;
             border: none;
-            border-radius: 0 4px 4px 0;
+            border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
+            box-sizing: border-box; /* Ensure padding is included in the width */
         }
-        
         .input-box button:hover {
             background-color: #45a049;
         }
-        
         iframe {
             width: 100%;
-            height: 60vh;
+            height: 80vh;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* Ensure padding is included in the width */
+        }
+        .lock-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box; /* Ensure padding is included in the width */
+        }
+        .lock-page input {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 1em;
+            box-sizing: border-box; /* Ensure padding is included in the width */
+        }
+        .lock-page button {
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-sizing: border-box; /* Ensure padding is included in the width */
+        }
+        .lock-page button:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="lock-page" id="lockPage">
+        <h2>Enter Password to Access the Emulator</h2>
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+        <button onclick="unlock()">Unlock</button>
+    </div>
+
+    <div class="main hidden" id="mainContent">
         <div class="header">
             <h1>Website Emulator</h1>
         </div>
-        
-        <!-- Login Section -->
-        <div class="section" id="loginSection">
-            <div class="form-container" id="loginContainer">
-                <h2>Login to Access the Emulator</h2>
-                <form onsubmit="handleLogin(event)">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter Username" required>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
-                    <button type="submit">Login</button>
-                </form>
-            </div>
+        <div class="input-box">
+            <input type="text" id="urlInput" placeholder="Enter website URL">
+            <button onclick="loadWebsite()">Emulate</button>
         </div>
-
-        <!-- Emulator Section -->
-        <div class="section" id="emulatorSection">
-            <div class="emulator-container" id="emulatorContainer">
-                <h2>Website Emulator</h2>
-                <div class="input-box">
-                    <input type="text" id="urlInput" placeholder="Enter website URL">
-                    <button onclick="loadWebsite()">Emulate</button>
-                </div>
-                <iframe id="iframe" src=""></iframe>
-            </div>
-        </div>
+        <iframe id="iframe" src=""></iframe>
     </div>
 
     <script>
-        const logins = {
-            'Albie': '12024',
-            'Eric': '82958',
-            'Timmy': '73947',
-            'Alfie': '92947',
-            'Oscar': '82847',
-            'Aarush': '93748',
-            'Harry': '48274',
-            'Aman': '28373',
-            'Anap': '27386',
-            'Admin': '00000'
-        };
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (logins[username] === password) {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('emulatorSection').style.display = 'block';
+        function unlock() {
+            var password = document.getElementById('passwordInput').value;
+            if (password === '12024') {
+                document.getElementById('lockPage').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
             } else {
-                alert('Incorrect username or password. Please try again.');
+                alert('Incorrect password. Please try again.');
             }
         }
 
         function loadWebsite() {
-            let url = document.getElementById('urlInput').value.trim();
-            if (url !== '') {
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    url = 'http://' + url;
-                }
-                document.getElementById('iframe').src = url;
-            } else {
-                alert('Please enter a valid website URL.');
+            var url = document.getElementById('urlInput').value;
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'http://' + url;
             }
+            document.getElementById('iframe').src = url;
         }
     </script>
 </body>
